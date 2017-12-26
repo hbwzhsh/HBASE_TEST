@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--自适应device-width设备宽度-->
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 可选的Bootstrap主题文件（一般不用引入）
+    <link href="./bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">-->
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="./bootstrap/js/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="../echarts/doc/asset/js/bootstrap.min.js"></script>
+
+    <title>ECharts</title>
+
+    <style>
+
+    </style>
+</head>
+
+<body>
+
+<div  id="main" style="margin-top:10px;height:400px;width:100vw;"></div>
+
+<!-- 2、引入模块化单文件echarts.js -->
+<script src="../echarts/echarts-all.js"></script>
+<!-- 3、模块加载器配置echarts和所需图表的路径(相对路径为从当前页面链接到echarts.js)-->
+<script type="text/javascript">
+    // 路径配置
+    require.config({
+        paths: {
+            echarts: './echarts/build/dist'
+        }
+    });
+
+    //-- 4、标签内动态加载echarts和所需图表，回调函数中可以初始化图表并驱动图表的生成-->
+    // 使用
+
+    require(
+            [
+                '.',
+                'echarts/theme/helianthus',
+                'echarts/chart/map'
+            ],
+            function (ec,theme) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('main'),theme);
+                require('echarts/util/mapData/params').params.HK = {
+                    getGeoJson: function (callback) {
+                        $.getJSON('./echarts/doc/example/geoJson/HK_geo.json',callback);
+                    }
+                };
+                var option = {
+                    title : {
+                        text : '香港18区人口密度 （2011）',
+                        subtext: '人口密度数据来自Wikipedia',
+                        sublink: 'http://zh.wikipedia.org/wiki/%E9%A6%99%E6%B8%AF%E8%A1%8C%E6%94%BF%E5%8D%80%E5%8A%83#cite_note-12'
+                    },
+                    tooltip : {
+                        trigger: 'item',
+                        formatter: '{b}<br/>{c} (p / km2)'
+                    },
+                    toolbox: {
+                        show : true,
+                        orient : 'vertical',
+                        x: 'right',
+                        y: 'center',
+                        feature : {
+                            mark : {show: true},
+                            dataView : {show: true, readOnly: false},
+                            restore : {show: true},
+                            saveAsImage : {show: true}
+                        }
+                    },
+                    dataRange: {
+                        min: 800,
+                        max: 50000,
+                        text:['High','Low'],
+                        realtime: false,
+                        calculable : true,
+                        color: ['orangered','yellow','lightskyblue']
+                    },
+                    series : [
+                        {
+                            name: '香港18区人口密度',
+                            type: 'map',
+                            mapType: 'HK', // 自定义扩展图表类型
+                            itemStyle:{
+                                normal:{label:{show:true}},
+                                emphasis:{label:{show:true}}
+                            },
+                            data:[
+                                {name: '中西区', value: 20057.34},
+                                {name: '湾仔', value: 15477.48},
+                                {name: '东区', value: 31686.1},
+                                {name: '南区', value: 6992.6},
+                                {name: '油尖旺', value: 44045.49},
+                                {name: '深水埗', value: 40689.64},
+                                {name: '九龙城', value: 37659.78},
+                                {name: '黄大仙', value: 45180.97},
+                                {name: '观塘', value: 55204.26},
+                                {name: '葵青', value: 21900.9},
+                                {name: '荃湾', value: 4918.26},
+                                {name: '屯门', value: 5881.84},
+                                {name: '元朗', value: 4178.01},
+                                {name: '北区', value: 2227.92},
+                                {name: '大埔', value: 2180.98},
+                                {name: '沙田', value: 9172.94},
+                                {name: '西贡', value: 3368},
+                                {name: '离岛', value: 806.98}
+                            ],
+// 自定义名称映射
+                            nameMap: {
+                                'Central and Western':'中西区',
+                                'Eastern':'东区',
+                                'Islands':'离岛',
+                                'Kowloon City':'九龙城',
+                                'Kwai Tsing':'葵青',
+                                'Kwun Tong':'观塘',
+                                'North':'北区',
+                                'Sai Kung':'西贡',
+                                'Sha Tin':'沙田',
+                                'Sham Shui Po':'深水埗',
+                                'Southern':'南区',
+                                'Tai Po':'大埔',
+                                'Tsuen Wan':'荃湾',
+                                'Tuen Mun':'屯门',
+                                'Wan Chai':'湾仔',
+                                'Wong Tai Sin':'黄大仙',
+                                'Yau Tsim Mong':'油尖旺',
+                                'Yuen Long':'元朗'
+                            },
+// 文本位置修正
+                            textFixed : {
+                                'Yau Tsim Mong' : [-10, 0]
+                            },
+// 文本直接经纬度定位
+                            geoCoord : {
+                                'Islands' : [113.95, 22.26]
+                            }
+                        }
+                    ]
+                };
+
+
+                // 为echarts对象加载数据 
+                myChart.setOption(option);
+                window.onresize = myChart.resize;
+//jquery ba-resize监听他的container
+//$("#dcDataUseStatisticContainer").resize(function(){$(myChart).resize();})
+            }
+    );
+</script>
+
+
+
+
+</body>

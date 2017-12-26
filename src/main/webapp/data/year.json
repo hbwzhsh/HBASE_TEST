@@ -1,0 +1,26 @@
+{  "name":"某市2005-1010年利润情况",
+    "product":
+        [
+            { "name": "PC" ,
+                "sales": [    { "year":"2005", "profit": 3000 },
+                    { "year":"2006", "profit": 1300 },
+                    { "year":"2007", "profit": 3700 },
+                    { "year":"2008", "profit": 4900 },
+                    { "year":"2009", "profit": 700 },
+                    { "year":"2010", "profit": 700 }] },
+            { "name": "SmartPhone" ,
+                "sales": [    { "year":"2005", "profit": 2000 },
+                    { "year":"2006", "profit": 4000 },
+                    { "year":"2007", "profit": 1810 },
+                    { "year":"2008", "profit": 6540 },
+                    { "year":"2009", "profit": 2820 },
+                    { "year":"2010", "profit": 1000 }] },
+            { "name": "Software" ,
+                "sales": [    { "year":"2005", "profit": 1100 },
+                    { "year":"2006", "profit": 1700 },
+                    { "year":"2007", "profit": 1680 },
+                    { "year":"2008", "profit": 4000 },
+                    { "year":"2009", "profit": 4900 },
+                    { "year":"2010", "profit": 700 }] }
+        ]
+}  

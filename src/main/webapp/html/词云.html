@@ -1,0 +1,260 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Echart-wordcloud</title>
+</head>
+
+<body>
+<p align="center">&nbsp;</p>
+<h2 align="center">&nbsp;</h2>
+<h2 align="center">2015年十一黄金周旅游报告</h2>
+<p align="center">&nbsp;</p>
+<br />
+<br />
+<br />
+<br />
+<h3 >&nbsp;<span class="STYLE12">&nbsp;国庆来了，我们出去玩吗？约吗？</span></h3>
+<p> &nbsp;&nbsp;<span class="STYLE27">&nbsp;国庆期间被朋友圈摄影大赛晒的美图虐惨了吧！？2015年的十一是国内景区公布最大承载量和实施限流的首个黄金周，全国有故宫，九寨沟等16个知名景区发布最大承载提醒。就算在如此人挤人的火爆状态下，也不能阻挡国人旅游的热情。<br />
+&nbsp;&nbsp;十一期间全国有21%的民众跨地市出行。其中以各自生活地区为基点，300公里以上远途出游的占比为47%，300公里以内近郊出游的占比为53%。北京、深圳、上海、广州、厦门、郑州、昆明、长沙、西安、南京为最喜欢出游的十大城市，市民出游人数与常住人数比均达到30%及以上，其中北京、深圳为最高，有将近4成的市民不畏拥堵，选择了国庆出游。<br />
+      </span></p>
+<div id="bar1" style="height:400px">  </div>
+
+
+<br />
+<br />
+<br />
+<br />
+        <strong>互联网+旅游</strong></span><br />
+<br />
+<br />
+<br />
+&nbsp;&nbsp;</span><span class="STYLE27">旅游市场和众多产业一样，受着互联网的改造，在今年来开始呈现出新的姿态。最为显著地是，在出发前很多人必定会在手机里安装好旅游APP以备不时之需。<br />
+  网络是游客国庆出游时获取旅游信息的第一渠道，查找旅游攻略、订购车票、预订酒店是游客使用最多的三项互联网服务，同时网络也可以让你的乏味的路程移动中增添乐趣。特别是对于自助游和学生群体来说，互联网是旅途中必不可少的工具。</span></p>
+<div id="wordCloud" style="height:400px">    </div>
+
+<p align="right">
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<!-- ECharts单文件引入 -->
+
+<script src="http://echarts.baidu.com/build/dist/echarts.js">   </script>
+<script type="text/javascript">
+
+    // 路径配置
+    require.config({
+        paths: {
+            echarts: 'http://echarts.baidu.com/build/dist'
+        }
+    });
+    // 使用
+    require(
+            [
+                'echarts',
+                'echarts/chart/line',
+                'echarts/chart/bar',
+                'echarts/chart/scatter',
+                'echarts/chart/k',
+                'echarts/chart/pie',
+                'echarts/chart/radar',
+                'echarts/chart/force',
+                'echarts/chart/chord',
+                'echarts/chart/gauge',
+                'echarts/chart/funnel',
+                'echarts/chart/eventRiver',
+                'echarts/chart/venn',
+                'echarts/chart/treemap',
+                'echarts/chart/tree',
+                'echarts/chart/wordCloud',
+                'echarts/chart/heatmap',
+                'echarts/chart/map'
+            ],DrawEchats);
+
+    function DrawEchats(ec){
+        drawBar1(ec);
+        drawWordCloud(ec);
+    }
+
+    function  drawBar1(ec) {
+        // 基于准备好的dom，初始化echarts图表
+        var myChart = ec.init(document.getElementById('bar1'));
+
+        var option1 = {
+            title : {
+                text: '外地游客比例最高的十大城市',
+
+            },
+            tooltip : {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['外地游客比例',]
+            },
+            toolbox: {
+                show : true,
+                feature : {
+                    mark : {show: true},
+                    dataView : {show: true, readOnly: false},
+                    magicType : {show: true, type: ['line', 'bar']},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                }
+            },
+            calculable : true,
+            xAxis : [
+                {
+                    type : 'category',
+                    data : ['北京市','厦门市','长沙市','郑州市','西安市','武汉市','杭州市','南京市','深圳市','广州市',]
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : [
+                {
+                    name:'外地游客比例',
+                    type:'bar',
+                    data:[36, 34, 34, 33, 32, 31, 30, 30, 30, 29,],
+                    markPoint : {
+                        data : [
+                            {type : 'max', name: '最大值'},
+                            {type : 'min', name: '最小值'}
+                        ]
+                    },
+                    markLine : {
+                        data : [
+                            {type : 'average', name: '平均值'}
+                        ]
+                    }
+                },
+            ]
+        };
+        //为echarts对象加载数据
+        myChart.setOption(option1,true);
+    }
+
+    function  drawWordCloud(ec) {
+        // 基于准备好的dom，初始化echarts图表
+        var myChart = ec.init(document.getElementById('wordCloud'));
+
+        var option = {
+            title: {
+                text: '旅游APP下载量',
+                link: 'http://www.google.com/trends/hottrends'
+            },
+            tooltip: {
+                show: true
+            },
+            series: [{
+                name: '关键词搜索量',
+                type: 'wordCloud',
+                size: ['80%', '80%'],
+                textRotation : [0, 45, 90, -45],
+                textPadding: 0,
+                autoSize: {
+                    enable: true,
+                    minSize: 14
+                },
+                data: [
+                    {name:"携程旅行",
+                        value: '18680.9',
+                        itemStyle: {
+                            normal: {
+                                color: 'black'
+                            }
+                        }
+                    },{
+                        name:"去哪儿旅游",
+                        value: '17365.6',
+                        itemStyle: {
+                            normal: {
+                                color: 'black'
+                            }
+                        }
+                    },
+                    {
+                        name: "航班管家",
+                        value: 6968.8,
+                        itemStyle: createRandomItemStyle()
+                    },
+                    {
+                        name: "高铁管家",
+                        value: 2300.5,
+                        itemStyle: createRandomItemStyle()
+                    },
+                    {
+                        name: "百度旅游",
+                        value: 1945.3,
+                        itemStyle: createRandomItemStyle()
+                    },
+                    {
+                        name: "铁友火车票",
+                        value: 1737.7,
+                        itemStyle: createRandomItemStyle()
+                    },
+                    {
+                        name: "住哪儿订酒店",
+                        value: 1191.9,
+                        itemStyle: createRandomItemStyle()
+                    },
+                    {
+                        name: "铂涛会",
+                        value: 1158,
+                        itemStyle: createRandomItemStyle()
+                    },
+
+                    {
+                        name: "超级指南针",
+                        value: 2093,
+                        itemStyle: createRandomItemStyle()
+                    },
+
+                    {
+                        name: "在路上",
+                        value: 1126.8,
+                        itemStyle: createRandomItemStyle()
+                    },
+                    {
+                        name: "穷游",
+                        value: 561.5,
+                        itemStyle: createRandomItemStyle()
+                    },
+
+                    {
+                        name: "神州租车",
+                        value: 339.2,
+                        itemStyle: createRandomItemStyle()
+                    },
+
+
+
+                    {
+                        name: "掌上如家",
+                        value: 312.1,
+                        itemStyle: createRandomItemStyle()
+                    },
+
+                ]
+            }]
+        };
+
+        //为echarts对象加载数据
+        myChart.setOption(option,true);
+    }
+    function createRandomItemStyle() {}
+
+</script>
+</p>
+<blockquote>
+    <blockquote>
+        <blockquote>
+            <p align="right"><br>
+                小组成员：生刘婧、周丹、夏雪晴、吴沁桦、夏卿<br>
+            </p>
+            <p align="right">联系我们：acmxiaq@163.com</p>
+        </blockquote>
+    </blockquote>
+</blockquote>
+</body>
+</html>
